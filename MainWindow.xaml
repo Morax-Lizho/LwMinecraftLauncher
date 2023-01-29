@@ -11,10 +11,29 @@
         <ComboBox Height="30"
               pu:ComboBoxHelper.Header="选择MC版本 : "
               HorizontalAlignment="Left"
-                  x:Name="versionCombo"
+              x:Name="versionCombo"
               VerticalAlignment="Top"
               Margin="30,30,0,0"
               DisplayMemberPath="Id"
+              pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
+        <TextBox Height="30"
+             Width="200"
+             x:Name="IdTextbox"
+             
+             pu:TextBoxHelper.Header="用户名 : "
+             pu:TextBoxHelper.CornerRadius="15" Margin="0,0,30,100" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <TextBox Height="30"
+             Width="268"
+             x:Name="MemoryTextbox"
+             Text="1024"
+             pu:TextBoxHelper.Header="最大内存 :  "
+             pu:TextBoxHelper.CornerRadius="15" Margin="30,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox Height="30"
+              pu:ComboBoxHelper.Header="选择Java版本 : "
+              HorizontalAlignment="Left"
+                  x:Name="javaCombo"
+              VerticalAlignment="Top"
+              Margin="30,65,0,0"
               pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
         <Button Height="60"
             Width="200"
