@@ -15,14 +15,21 @@ using System.Windows.Shapes;
 using Panuon.UI.Silver;
 using KMCCC.Launcher;
 using KMCCC.Authentication;
+using SquareMinecraftLauncher;
+using SquareMinecraftLauncherWPF;
 
 namespace LwMinecraftLauncher
 {
+
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : WindowX
     {
+        LoginUI.Offline Offline = new LoginUI.Offline();
+        LoginUI.Mojang Mojang = new LoginUI.Mojang();
+        LoginUI.Microsoft Microsoft = new LoginUI.Microsoft();
+        public int launchMode;
         SquareMinecraftLauncher.Minecraft.Tools tools = new SquareMinecraftLauncher.Minecraft.Tools();
         public static LauncherCore Core = LauncherCore.Create();
         public MainWindow()
@@ -42,42 +49,67 @@ namespace LwMinecraftLauncher
             //初始选择
             versionCombo.SelectedItem = versionCombo.Items[0];
             javaCombo.SelectedItem = javaCombo.Items[0];
+            ContentControl.Content = new Frame
+            {
+                Content = Offline
+            };
+            launchMode = 1;
         }
-        public void GameStart()
+        public async void GameStart()
         {
-            if(versionCombo.Text != string.Empty&&javaCombo.Text != string.Empty&&MemoryTextbox.Text != string.Empty&&IdTextbox.Text != string.Empty)
+            LaunchOptions launchOptions = new LaunchOptions();
+            switch (launchMode)
+            {
+                case 1:
+                    launchOptions.Authenticator = new OfflineAuthenticator(Offline.IdTextbox.Text);
+                    break;
+                case 2:
+                    launchOptions.Authenticator = new YggdrasilLogin(Mojang.Email.Text, Mojang.Password.Password,false);
+                    break;
+            }
+            launchOptions.MaxMemory = Convert.ToInt32(MemoryTextbox.Text);
+            if (versionCombo.Text != string.Empty&&javaCombo.Text != string.Empty&&MemoryTextbox.Text != string.Empty&&
+                (Offline.IdTextbox.Text != string.Empty||Mojang.Email.Text != string.Empty||Mojang.Password.Password != string.Empty))
             {
                 try
                 {
-                    Core.JavaPath = javaCombo.Text;
-                    var ver = (KMCCC.Launcher.Version)versionCombo.SelectedItem;
-                    var result = Core.Launch(new LaunchOptions
+                    if(launchMode != 3)
                     {
-                        Version = ver, //Ver为Versions里你要启动的版本名字
-                        MaxMemory = Convert.ToInt32(MemoryTextbox.Text), //最大内存，int类型
-                        Authenticator = new OfflineAuthenticator(IdTextbox.Text), //离线启动，ZhaiSoul那儿为你要设置的游戏名
-                        //Authenticator = new YggdrasilLogin("邮箱", "密码", true), // 正版启动，最后一个为是否twitch登录
-                        Mode = LaunchMode.MCLauncher, //启动模式，这个我会在后面解释有哪几种
-                        //Server = new ServerInfo { Address = "服务器IP地址", Port = "服务器端口" }, //设置启动游戏后，自动加入指定IP的服务器，可以不要
-                        //ize = new WindowSize { Height = 768, Width = 1280 } //设置窗口大小，可以不要
-                    });
-                    if (!result.Success)
-                    {
-                        switch (result.ErrorType)
+                        Core.JavaPath = javaCombo.Text;
+                        var ver = (KMCCC.Launcher.Version)versionCombo.SelectedItem;
+                        launchOptions.Version = ver;
+                        var result = Core.Launch(launchOptions);
+                        if (!result.Success)
                         {
-                            case ErrorType.NoJAVA:
-                                MessageBoxX.Show("Java错误，详细信息：" + result.ErrorMessage, "错误");
-                                break;
-                            case ErrorType.AuthenticationFailed:
-                                MessageBoxX.Show("登录错误，详细信息：" + result.ErrorMessage, "错误");
-                                break;
-                            case ErrorType.UncompressingFailed:
-                                MessageBoxX.Show("文件错误，详细信息：" + result.ErrorMessage, "错误");
-                                break;
-                            default:
-                                MessageBoxX.Show("未知错误，详细信息：" + result.ErrorMessage, "错误");
-                                break;
+                            switch (result.ErrorType)
+                            {
+                                case ErrorType.NoJAVA:
+                                    MessageBoxX.Show("Java错误，详细信息：" + result.ErrorMessage, "错误");
+                                    break;
+                                case ErrorType.AuthenticationFailed:
+                                    MessageBoxX.Show("登录错误，详细信息：" + result.ErrorMessage, "错误");
+                                    break;
+                                case ErrorType.UncompressingFailed:
+                                    MessageBoxX.Show("文件错误，详细信息：" + result.ErrorMessage, "错误");
+                                    break;
+                                default:
+                                    MessageBoxX.Show("未知错误，详细信息：" + result.ErrorMessage, "错误");
+                                    break;
+                            }
                         }
+                    }
+                    else
+                    {
+                        microsoft_launcher.MicrosoftAPIs microsoftAPIs = new microsoft_launcher.MicrosoftAPIs();
+                        var v = Microsoft.MicrosoftWebBrowser.Source.ToString().Replace(microsoftAPIs.cutUri,string.Empty);
+                        var t = Task.Run(() =>
+                        {
+                            return microsoftAPIs.GetAccessTokenAsync(v, false).Result;
+                        });
+                        await t;
+                        var v1 = microsoftAPIs.GetAllThings(t.Result.access_token, false);
+                        SquareMinecraftLauncher.Minecraft.Game game = new SquareMinecraftLauncher.Minecraft.Game();
+                        await game.StartGame(versionCombo.Text,javaCombo.Text,Convert.ToInt32(MemoryTextbox.Text),v1.name,v1.uuid,v1.mcToken,string.Empty,string.Empty);
                     }
                 }
                 catch
@@ -91,9 +123,40 @@ namespace LwMinecraftLauncher
             }
         }
 
+        //启动按钮
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GameStart();
+        }
+
+        //离线登录
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new Frame
+            {
+                Content = Offline
+            };
+            launchMode = 1;
+        }
+
+        //Mojang登录
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new Frame
+            {
+                Content = Mojang
+            };
+            launchMode = 2;
+        }
+
+        //微软登录
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new Frame
+            {
+                Content = Microsoft
+            };
+            launchMode = 3;
         }
     }
 }

@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using microsoft_launcher;
 
 namespace LwMinecraftLauncher.LoginUI
 {
     /// <summary>
-    /// Microsoft.xaml 的交互逻辑
+    /// Mojang.xaml 的交互逻辑
     /// </summary>
-    public partial class Microsoft : Page
+    public partial class Mojang : Page
     {
-        public Microsoft()
+        public Mojang()
         {
             InitializeComponent();
-            MicrosoftAPIs microsoftAPIs = new MicrosoftAPIs();
-            microsoftAPIs.SuppressWininetBehavior();
-            MicrosoftWebBrowser.Source = microsoftAPIs.loginWebsite;
         }
     }
 }

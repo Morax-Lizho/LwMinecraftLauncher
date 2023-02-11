@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="我的世界LMCL启动器" Height="450" Width="800" FontSize="14">
     <Grid>
+        <ContentControl HorizontalAlignment="Right" x:Name="ContentControl" VerticalAlignment="Bottom" Width="200" Height="200" Margin="0,0,30,140"></ContentControl>
         <ComboBox Height="30"
               pu:ComboBoxHelper.Header="选择MC版本 : "
               HorizontalAlignment="Left"
@@ -16,12 +17,6 @@
               Margin="30,30,0,0"
               DisplayMemberPath="Id"
               pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
-        <TextBox Height="30"
-             Width="200"
-             x:Name="IdTextbox"
-             
-             pu:TextBoxHelper.Header="用户名 : "
-             pu:TextBoxHelper.CornerRadius="15" Margin="0,0,30,100" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         <TextBox Height="30"
              Width="268"
              x:Name="MemoryTextbox"
@@ -35,6 +30,21 @@
               VerticalAlignment="Top"
               Margin="30,65,0,0"
               pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
+        <Button Height="30"
+            Width="60"
+            Content="离线"
+            pu:ButtonHelper.ButtonStyle="Outline"
+            pu:ButtonHelper.CornerRadius="15" Margin="0,0,170,100" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" Click="Button_Click_1"/>
+        <Button Height="30"
+            Width="60"
+            Content="正版"
+            pu:ButtonHelper.ButtonStyle="Outline"
+            pu:ButtonHelper.CornerRadius="15" Margin="0,0,100,100" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" Click="Button_Click_2"/>
+        <Button Height="30"
+            Width="60"
+            Content="微软"
+            pu:ButtonHelper.ButtonStyle="Outline"
+            pu:ButtonHelper.CornerRadius="15" Margin="0,0,30,100" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" Click="Button_Click_3"/>
         <Button Height="60"
             Width="200"
             Content="Start"

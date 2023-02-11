@@ -55,6 +55,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="microsoft_launcher">
+      <HintPath>D:\Documents\Tencent Files\259333592\FileRecv\microsoft_launcher.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -209,6 +212,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LoginUI\Microsoft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginUI\Mojang.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginUI\Offline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -216,6 +231,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LoginUI\Microsoft.xaml.cs">
+      <DependentUpon>Microsoft.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginUI\Mojang.xaml.cs">
+      <DependentUpon>Mojang.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginUI\Offline.xaml.cs">
+      <DependentUpon>Offline.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
