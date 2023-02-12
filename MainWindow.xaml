@@ -15,7 +15,7 @@
               x:Name="versionCombo"
               VerticalAlignment="Top"
               Margin="30,30,0,0"
-              DisplayMemberPath="Id"
+              DisplayMemberPath="version"
               pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
         <TextBox Height="30"
              Width="268"
@@ -26,7 +26,7 @@
         <ComboBox Height="30"
               pu:ComboBoxHelper.Header="选择Java版本 : "
               HorizontalAlignment="Left"
-                  x:Name="javaCombo"
+              x:Name="javaCombo"
               VerticalAlignment="Top"
               Margin="30,65,0,0"
               pu:ComboBoxHelper.ItemHeight="30" Width="268"/>
