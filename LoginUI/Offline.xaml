@@ -9,7 +9,7 @@
       Title="Offline">
 
     <Grid>
-        <TextBox x:Name="IdTextbox" Text="Test" Height="30" VerticalAlignment="Bottom" FontSize="18" Margin="63,0,0,0"/>
+        <TextBox x:Name="IdTextbox" Text="Test" Height="30" VerticalAlignment="Bottom" FontSize="18" Margin="63,0,0,0" TextChanged="IdTextbox_TextChanged"/>
         <Label Content="名称：" HorizontalAlignment="Left" Margin="0,170,0,0" VerticalAlignment="Top" Height="30" Width="58" FontSize="16"/>
     </Grid>
 </Page>

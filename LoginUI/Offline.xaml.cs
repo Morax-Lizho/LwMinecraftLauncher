@@ -24,5 +24,9 @@ namespace LwMinecraftLauncher.LoginUI
         {
             InitializeComponent();
         }
+        private void IdTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

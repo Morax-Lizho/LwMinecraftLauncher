@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LwMinecraftLauncher"
         mc:Ignorable="d"
-        Title="我的世界LMCL启动器" Height="450" Width="800" FontSize="14">
+        Title="我的世界LMCL启动器" Height="450" Width="800" FontSize="14"
+        Closing="WindowX_Closing">
     <Grid>
         <ContentControl HorizontalAlignment="Right" x:Name="ContentControl" VerticalAlignment="Bottom" Width="200" Height="200" Margin="0,0,30,140"></ContentControl>
         <ComboBox Height="30"
@@ -20,9 +21,8 @@
         <TextBox Height="30"
              Width="268"
              x:Name="MemoryTextbox"
-             Text="1024"
              pu:TextBoxHelper.Header="最大内存 :  "
-             pu:TextBoxHelper.CornerRadius="15" Margin="30,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+             pu:TextBoxHelper.CornerRadius="15" Margin="30,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" TextChanged="MemoryTextbox_TextChanged"/>
         <ComboBox Height="30"
               pu:ComboBoxHelper.Header="选择Java版本 : "
               HorizontalAlignment="Left"
