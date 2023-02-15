@@ -25,7 +25,6 @@ namespace LwMinecraftLauncher.LoginUI
         {
             InitializeComponent();
             MicrosoftAPIs microsoftAPIs = new MicrosoftAPIs();
-            microsoftAPIs.SuppressWininetBehavior();
             MicrosoftWebBrowser.Source = microsoftAPIs.loginWebsite;
         }
     }

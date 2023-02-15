@@ -39,6 +39,7 @@ namespace LwMinecraftLauncher
         string settingPath = @"./LMCL/LwMinecraftLauncher.json";
         Setting setting = new Setting();
         RegisterSetting registerSetting = new RegisterSetting();
+        string Access_token;
 
         //数据保存
         public class Setting
@@ -48,6 +49,8 @@ namespace LwMinecraftLauncher
         public class RegisterSetting
         {
             public string name = string.Empty;
+            public string email = string.Empty;
+            public string password = string.Empty;
         }
 
         public void LauncherInitialization()
@@ -79,6 +82,8 @@ namespace LwMinecraftLauncher
                     using (RegistryKey software = key.CreateSubKey("software\\LwMinecraftLauncherSetting"))
                     {
                         software.SetValue("name", registerSetting.name);
+                        software.SetValue("email", registerSetting.email);
+                        software.SetValue("password", registerSetting.password);
                     }
                 }
             }
@@ -89,10 +94,14 @@ namespace LwMinecraftLauncher
                     using (RegistryKey software = key.CreateSubKey("software\\LwMinecraftLauncherSetting"))
                     {
                         registerSetting.name = software.GetValue("name").ToString();
+                        registerSetting.email = software.GetValue("email").ToString();
+                        registerSetting.password = software.GetValue("password").ToString();
                     }
                 }
             }
             Offline.IdTextbox.Text = registerSetting.name;
+            Mojang.Email.Text = registerSetting.email;
+            Mojang.Password.Password = registerSetting.password;
             //自动找版本
             var versions = tools.GetAllTheExistingVersion();
             versionCombo.ItemsSource = versions;
@@ -144,7 +153,6 @@ namespace LwMinecraftLauncher
                             break;
                         //微软启动
                         case 3:
-                            microsoft_launcher.MicrosoftAPIs microsoftAPIs = new microsoft_launcher.MicrosoftAPIs();
                             var v = Microsoft.MicrosoftWebBrowser.Source.ToString().Replace(microsoftAPIs.cutUri, string.Empty);
                             var t = Task.Run(() =>
                             {
@@ -216,6 +224,8 @@ namespace LwMinecraftLauncher
                 using (RegistryKey software = key.CreateSubKey("software\\LwMinecraftLauncherSetting"))
                 {
                     software.SetValue("name", Offline.IdTextbox.Text);
+                    software.SetValue("email", Mojang.Email.Text);
+                    software.SetValue("password", Mojang.Password.Password);
                 }
             }
         }
